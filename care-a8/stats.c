@@ -3,12 +3,9 @@
 #include <math.h>
 
  
-void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, double *avg, double *trunc_avg, double *var) {
-    int i;
-	int j;
-	int k;
-	int l;
-	int m;
+//void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, double *avg, double *trunc_avg, double *var) {
+void compute_stats(int * __restrict data, int N, int *__restrict min, int *__restrict max, int *__restrict num_over_avg, double *__restrict avg, double *__restrict trunc_avg, double *__restrict var) {
+    int i, j, k, l, m;
 
 	//Work starts here::
 	//idea: only use one for loop to execute many instructions	
