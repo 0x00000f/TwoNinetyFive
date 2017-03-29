@@ -31,7 +31,7 @@ void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, doub
 				*var = NAN;
 				*trunc_avg = NAN;
 				return;
-			}
+	}
 
 	for (i = 1; i < N; i++) {
 		//compute min
@@ -50,23 +50,23 @@ void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, doub
 		//compute average
         *avg += (double)(data[i]);
 			
-/*			
-		//TEST
-		if(flag1==1){ 
-    		*avg /= (double)N;
-		}
-		flag1 = 0; 
-*/
+
+
+
 		if(i == N-1){
 	    	*avg /= (double)N;
+
+			//count number over average
+			for (i = 0; i < N; i++) {
+		
+				if (data[i] > *avg) {
+       	    		 *num_over_avg += 1;
+       		 	}
+			} 
 		} 
 
-		//count number over average
-		if (data[i] > *avg) {
-            *num_over_avg += 1;
-        }
-	} 
-}
+	}
+} 
 /*
 
 

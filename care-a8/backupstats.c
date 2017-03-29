@@ -6,44 +6,7 @@
 void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, double *avg, double *trunc_avg, double *var) {
     int i;
 
-
-	//Work starts here::
-	//idea: only use one for loop to execute many instructions	
-	
-	//
-    *min = data[0];
-    *max = data[0];
-    *avg = 0.0;
-    *num_over_avg = 0;
-	for (i = 1; i < N; i++) {
-		//compute min
-		if (data[i] < *min) {
-            *min = data[i];
-        }	
-		//compute max
-		if (data[i] > *max) {
-            *max = data[i];
-        }
-		//compute average
-        *avg += (double)(data[i]);
-		if (N <= 0) { // avoid division by zero
-			*num_over_avg = 0;
-			*avg = NAN;
-			*var = NAN;
-			*trunc_avg = NAN;
-			return;
-		} 
-    	*avg /= (double)N;
 		
-		//count number over average
-		if (data[i] > *avg) {
-			*num_over_avg += 1;
-		}
-
-    }
-
-		
-/*
     // compute min
     *min = data[0];
     for (i = 1; i < N; i++) {
@@ -80,7 +43,6 @@ void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, doub
             *num_over_avg += 1;
         }
     }
-*/
 
     // compute variance
     *var = 0.0;

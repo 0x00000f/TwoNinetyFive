@@ -40,31 +40,49 @@ compute_stats:
 	cmpq	%r11, %rax
 	jne	.L8
 .L4:
-	cvtsi2sd	%esi, %xmm2
+	leal	-1(%rsi), %ecx
 	xorl	%eax, %eax
-	movsd	(%r9), %xmm0
+	jmp	.L15
 	.p2align 4,,10
 	.p2align 3
-.L12:
-	cvtsi2sd	(%rdi,%rax,4), %xmm1
-	addsd	%xmm1, %xmm0
-	divsd	%xmm2, %xmm0
-	ucomisd	%xmm0, %xmm1
-	jbe	.L9
+.L20:
+	addl	$1, %eax
+	movsd	%xmm0, (%r9)
+	cmpl	%eax, %esi
+	jle	.L19
+.L15:
+	movslq	%eax, %rdx
+	cmpl	%ecx, %eax
+	cvtsi2sd	(%rdi,%rdx,4), %xmm0
+	addsd	(%r9), %xmm0
+	jne	.L20
+	cvtsi2sd	%esi, %xmm1
+	xorl	%eax, %eax
+	divsd	%xmm1, %xmm0
+	movapd	%xmm0, %xmm1
+	movsd	%xmm0, (%r9)
+	.p2align 4,,10
+	.p2align 3
+.L13:
+	cvtsi2sd	(%rdi,%rax,4), %xmm0
+	ucomisd	%xmm1, %xmm0
+	jbe	.L11
 	addl	$1, (%r8)
-.L9:
+.L11:
 	addq	$1, %rax
 	cmpl	%eax, %esi
-	jg	.L12
-	movsd	%xmm0, (%r9)
-	ret
-	.p2align 4,,10
-	.p2align 3
+	jg	.L13
+	movl	%esi, %eax
+	addl	$1, %eax
+	cmpl	%eax, %esi
+	jg	.L15
+.L19:
+	rep ret
 .L2:
-	movsd	.LC1(%rip), %xmm3
-	movsd	%xmm3, (%r9)
-	movsd	%xmm3, (%r10)
-	movsd	%xmm3, (%rax)
+	movsd	.LC1(%rip), %xmm2
+	movsd	%xmm2, (%r9)
+	movsd	%xmm2, (%r10)
+	movsd	%xmm2, (%rax)
 	ret
 	.cfi_endproc
 .LFE27:
