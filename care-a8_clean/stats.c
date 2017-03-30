@@ -6,7 +6,6 @@
 void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, double *avg, double *trunc_avg, double *var) {
     int i;
 
-		
     // compute min
     *min = data[0];
     for (i = 1; i < N; i++) {
@@ -24,6 +23,7 @@ void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, doub
     }
 
     // compute average
+    *avg = 0.0;
     for (i = 0; i < N; i++) {
         *avg += (double)(data[i]);
     }

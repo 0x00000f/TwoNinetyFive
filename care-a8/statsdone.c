@@ -2,22 +2,12 @@
 #include <stdio.h>
 #include <math.h>
 
-//__restrict keyword removes pointer aliasing
-void compute_stats(int * __restrict data, int N, int *__restrict min, int *__restrict max, int *__restrict num_over_avg, double *__restrict avg, double *__restrict trunc_avg, double *__restrict var) {
 
-//void compute_stats(int * data, int N, int min, int * max, int *num_over_avg, double *avg, double *trunc_avg, double *var) {
+void compute_stats(int *data, int N, int *min, int *max, int *num_over_avg, double *avg, double *trunc_avg, double *var) {
     int i;
 
     // compute min
     *min = data[0];
-    *max = data[0];
-    *avg = 0.0;
-    *num_over_avg = 0;
-    *var = 0.0;
-	*trunc_avg = 0.0;
-    int incl_min = 0;
-    int incl_max = 0;
-
    	for (i = 1; i < (N-2); i+=3) {
         if (data[i] < *min) {
             *min = data[i];
@@ -34,6 +24,7 @@ void compute_stats(int * __restrict data, int N, int *__restrict min, int *__res
 
 
     // compute max
+    *max = data[0];
     for (i = 1; i < (N-2); i+=3) {
         if (data[i] > *max) {
             *max = data[i];
@@ -47,6 +38,7 @@ void compute_stats(int * __restrict data, int N, int *__restrict min, int *__res
     }
 
     // compute average
+    *avg = 0.0;
     for (i = -1; i < (N-2); i+=3) {
         *avg += (double)(data[i]);
         *avg += (double)(data[i+1]);
@@ -62,6 +54,7 @@ void compute_stats(int * __restrict data, int N, int *__restrict min, int *__res
     *avg /= (double)N;
 
     // count number over average
+    *num_over_avg = 0;
     for (i = -1; i < (N-2); i+=3) {
         if (data[i] > *avg) {
             *num_over_avg += 1;
@@ -77,8 +70,8 @@ void compute_stats(int * __restrict data, int N, int *__restrict min, int *__res
     }
 
     // compute variance
-	// optimized for loop initialization
-    for (i=N; i--;) {
+    *var = 0.0;
+    for (i = 0; i < N; i++) {
         *var += (((double)(data[i]) - *avg) * ((double)(data[i]) - *avg));
     }
     if (N == 1) { // avoid division by zero
@@ -89,8 +82,12 @@ void compute_stats(int * __restrict data, int N, int *__restrict min, int *__res
     *var /= (double)(N - 1);
 
     // compute truncated average
+    *trunc_avg = 0.0;
+    int incl_min = 0;
+    int incl_max = 0;
+
+
 	//optimized for loop initialization
-    //for (i = N; i--;) {
     for (i = N; i--;) {
         if (data[i] == *min && !incl_min) {
             incl_min = 1;
@@ -101,7 +98,6 @@ void compute_stats(int * __restrict data, int N, int *__restrict min, int *__res
             continue;
         }
 		*trunc_avg += (double)(data[i]);
-
 
     }
     if (N == 2) { // avoid division by zero
