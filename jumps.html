@@ -1,0 +1,49 @@
+
+<html>
+<head>
+<title>Table of x86-64 Jumps</title>
+<style>
+tr td { background:#ccc;
+}
+tr.even td { background:#fde;
+}
+tr.odd td { background:#efd;
+}
+</style>
+
+</head>
+
+<body>
+<h2>Table of x86-64 Jumps</h2>
+
+<table cellpadding="6">
+<thead>
+</thead>
+<tbody>
+<tr>
+<td><b>Instruction</b></td>
+<td><b>Condition</b></td>
+<td><b>Description</b></td>
+</tr>
+<tr class="even"> <td><code>jmp</code></td> <td>always</td> <td>Unconditional jump</td> </tr>
+<tr class="odd"> <td><code>je</code> / <code>jz</code></td> <td><code>ZF</code></td> <td>Jump if equal / zero</td> </tr>
+<tr class="odd"> <td><code>jne</code> / <code>jnz</code></td> <td><code>~ZF</code></td> <td>Jump if not equal / not zero</td> </tr>
+<tr class="even"> <td><code>js</code></td> <td><code>SF</code></td> <td>Jump if negative</td> </tr>
+<tr class="even"> <td><code>jns</code></td> <td><code>~SF</code></td> <td>Jump if nonnegative</td> </tr>
+<tr class="odd"> <td><code>jo</code></td> <td><code>OF</code></td> <td>Jump if overflow</td> </tr>
+<tr class="odd"> <td><code>jno</code></td> <td><code>~OF</code></td> <td>Jump if not overflow</td> </tr>
+<tr class="even"> <td><code>jg</code> / <code>jnle</code></td> <td><code>~(SF ^ OF) & ~ZF</code></td> <td>Jump if greater (signed &gt;)</td> </tr>
+<tr class="even"> <td><code>jge</code> / <code>jnl</code></td> <td><code>~(SF ^ OF)</code></td> <td>Jump if greater or equal (signed &geq;)</td> </tr>
+<tr class="even"> <td><code>jl</code> / <code>jnge</code></td> <td><code>SF ^ OF</code></td> <td>Jump if less (signed &lt;)</td> </tr>
+<tr class="even"> <td><code>jle</code> / <code>jng</code></td> <td><code>(SF ^ OF) | ZF</code></td> <td>Jump if less or equal (signed &leq;)</td> </tr>
+<tr class="odd"> <td><code>ja</code> / <code>jnbe</code></td> <td><code>~CF & ~ZF</code></td> <td>Jump if greater (unsigned &gt;)</td> </tr>
+<tr class="odd"> <td><code>jae</code> / <code>jnb</code></td> <td><code>~CF</code></td> <td>Jump if greater or equal (unsigned &geq;)</td> </tr>
+<tr class="odd"> <td><code>jb</code> / <code>jnae</code> / <code>jc</code></td> <td><code>CF</code></td> <td>Jump if less (unsigned &lt;)</td> </tr>
+<tr class="odd"> <td><code>jbe</code> / <code>jna</code> / <code>jnc</code></td> <td><code>CF | ZF</code></td> <td>Jump if less or equal (unsigned &leq;)</td> </tr>
+
+</tbody>
+</table>
+
+</body>
+</html>
+
